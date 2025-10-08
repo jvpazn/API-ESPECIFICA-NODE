@@ -47,6 +47,9 @@ GET /Jogos/First
 
 GET /Jogos/Last
   -> Retorna o último jogo cadastrado.
+
+GET /Jogos/Med
+  -> Retorna a média de todos os jogos cadastrados.
 =====================================
     http://localhost:${port}/Jogos
 =====================================
@@ -73,12 +76,12 @@ app.post('/Jogos/idCreate', (req, res) => {
     const preco = req.body.preco; 
         let newID = 0
         const lastid = Jogos.length - 1
-        while(newID < (Jogos[lastid].id)){
+        while(newID <= (Jogos[lastid].id)){
         newID++
         } 
 
     const novoJogo = {
-        id: newID+1,
+        id: newID,
         nome: nome,
         Tags: Tags,
         preco: preco
@@ -145,3 +148,41 @@ app.get("/Jogos/First", (req,res) => res.json({Quantia : `Primeiro jogo cadastra
 
 app.get("/Jogos/Last", (req,res) => res.json({Quantia : `Ultimo jogo cadastrado foi : ${(Jogos[Jogos.length - 1].nome)}` }));
 
+app.get('/Jogos/Med', (req, res) => {
+    
+    let Sum = 0
+
+    for(let i = 0; i < Jogos.length ;i++){
+        
+        Sum += Jogos[i].preco
+
+    }
+
+    let Med = Sum/Jogos.length
+    res.json({Media : `A média de preço de todos os jogos cadastrados atualmente é : ${(Med)}` })
+});
+
+app.post('/Jogos/idCreateMultiple', (req, res) => {
+    const novosJogosArray = req.body; 
+    const jogosAdicionados = []; 
+
+    let ultimoId = 0;
+    if (Jogos.length > 0) {
+        ultimoId = Math.max(...Jogos.map(jogo => jogo.id)); 
+    }
+
+    for (const novoJogoData of novosJogosArray) {
+        ultimoId++; 
+
+        const novoJogo = {
+            id: ultimoId,
+            nome: novoJogoData.nome,
+            Tags: novoJogoData.Tags,
+            preco: novoJogoData.preco
+        };
+
+        Jogos.push(novoJogo); 
+        jogosAdicionados.push(novoJogo); 
+    }
+    res.status(201).json(jogosAdicionados);
+});
