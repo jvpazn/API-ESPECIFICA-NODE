@@ -8,11 +8,17 @@ let Jogos = [
     {id : 1, nome: 'Lobotomy Corporation', Tags:['Indie','Management','PsychologicalHorror','2D'],preco:36},
     {id : 2, nome: 'Library of Ruina', Tags:['Indie','StoryRich','DeckBuilding','2D'],preco:46},
     {id : 3, nome: 'Balatro', Tags:['Indie','Roguelike','PsychologicalHorror','2D'],preco:50},
-    {id : 4, nome: 'Hello Neighbor', Tags:['Indie','Puzzle','3D'],preco:16},
+    {id : 4, nome: 'Hello Neighbor', Tags:['Indie','Puzzle','3D', 'PEAK'],preco:16},
     {id : 5, nome: 'Hello Kitty Island Adventure', Tags:['Indie','Cute','2D'],preco:270},
     {id : 6, nome: 'Touhou Kinjoukyou ～ Fossilized Wonders', Tags:['Indie','BulletHell','Difficult','2D'],preco:47},
-    {id : 7, nome: 'Sonic mania', Tags:['Platformer','2D'],preco:22}
-
+    {id : 7, nome: 'Sonic Mania', Tags:['Platformer','Furries','2D'],preco:22},
+    {id : 8, nome: 'Hades', Tags:['Indie','Roguelike', 'Furries','2.5D'],preco:25},
+    {id : 9, nome: 'Grand Theft Auto: San Andreas', Tags:['Adventure','PEAK','3D'],preco:35},
+    {id : 10, nome: 'Hollow Knight', Tags:['Indie','Metroidvania', 'Furries','2D'],preco:67},
+    {id : 11, nome: "Five Nights at Freddy's: Security Breach", Tags:['Horror','Gore', 'Furries', '+18','3D'],preco:621},
+    {id : 12, nome: "Deltarune", Tags:['GreatSoundtrack','RPG', 'Furries','StoryRich','[[BIG SHOT]]','2D'],preco:34},
+    {id : 13, nome: "Super Mario World Switch 2 Edition", Tags:['Plataformer','Furries','2D'],preco:500},
+    {id : 14, nome: "Super Mario Odyssey Switch 2 Edition", Tags:['Nipples','+18','Furries','Plataformer','[[MID SHOT]]','3D'],preco:600}
 ];
 
 app.listen(port, () => {
@@ -50,6 +56,9 @@ GET /Jogos/Last
 
 GET /Jogos/Med
   -> Retorna a média de todos os jogos cadastrados.
+
+POST /Jogos/idCreateMultiple
+  -> Cria Mais de um Jogo de uma vez.
 =====================================
     http://localhost:${port}/Jogos
 =====================================
@@ -127,7 +136,7 @@ app.get('/Jogos/precoSearch/:preco', (req, res) => {
     const precoM = parseInt(req.params.preco);
     const JogosSelecionados = []
     for(let i = 0; i < Jogos.length ;i++){
-        if (Jogos[i].preco < precoM){
+        if (Jogos[i].preco > precoM){
             JogosSelecionados.push(Jogos[i])
         }else{
 
