@@ -220,4 +220,45 @@ app.post('/Jogos/idCreateMultiple', (req, res) => {
     res.status(201).json(jogosAdicionados);
 });
 
+// EXEMPLOS PARA SEREM UTILIZADOS :
+
+/*
+
+{
+  "nome": "Celeste",
+  "Tags": ["Platformer", "Indie", "Difficult", "Pixel Art"],
+  "preco": 28
+}
+
+{
+  "nome": "Stardew Valley",
+  "Tags": ["Farming", "Relaxing", "Indie", "2D"],
+  "preco": 26
+}
+
+{
+  "nome": "Undertale",
+  "Tags": ["StoryRich", "RPG", "Indie", "2D"],
+  "preco": 19
+}
+
+{
+  "nome": "Risk of Rain 2",
+  "Tags": ["Indie", "Roguelike", "Multiplayer", "3D"],
+  "preco": 45
+}
+
+    
+*/
+
+
+
+
+
+
+
+
+
+
+
 
