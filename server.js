@@ -4,6 +4,8 @@ const port = 3000;
 
 app.use(express.json());
 
+//JOGOS
+
 let Jogos = [
     {id : 1, nome: 'Lobotomy Corporation', Tags:['Indie','Management','PsychologicalHorror','2D'],preco:36},
     {id : 2, nome: 'Library of Ruina', Tags:['Indie','StoryRich','DeckBuilding','2D'],preco:46},
@@ -20,6 +22,8 @@ let Jogos = [
     {id : 13, nome: "Super Mario World Switch 2 Edition", Tags:['Plataformer','Furries','2D'],preco:500},
     {id : 14, nome: "Super Mario Odyssey Switch 2 Edition", Tags:['Nipples','+18','Furries','Plataformer','[[MID SHOT]]','3D'],preco:600}
 ];
+
+//PORT NO CONSOLE
 
 app.listen(port, () => {
     console.log(`
@@ -66,12 +70,18 @@ POST /Jogos/idCreateMultiple
 
 });
 
+// PEGA TODOS OS JOGOS
+
 app.get("/Jogos", (req,res) => res.json(Jogos));
+
+//PESQUISA POR ID
 
 app.get("/Jogos/idSearch/:id", (req,res) => {
 const id = parseInt(req.params.id);
 const JogoEncontrado = Jogos.find(p => p.id === id);
 
+// SE O JOGO FOI ENCONTRADO OU NÃO 
+    
 if(JogoEncontrado){
     res.json(JogoEncontrado)
 }else{
@@ -79,16 +89,20 @@ if(JogoEncontrado){
 }
 });
 
+// CRIAR JOGOS
+
 app.post('/Jogos/idCreate', (req, res) => {
     const nome = req.body.nome;
     const Tags = req.body.Tags;
     const preco = req.body.preco; 
+// FUNÇÃO MENOS EFICIENTE COMPARADA A DO FINAL
         let newID = 0
         const lastid = Jogos.length - 1
         while(newID <= (Jogos[lastid].id)){
         newID++
         } 
 
+// NOVO JOGO 
     const novoJogo = {
         id: newID,
         nome: nome,
@@ -100,6 +114,8 @@ app.post('/Jogos/idCreate', (req, res) => {
     Jogos.push(novoJogo);
     res.status(201).json(novoJogo)
 });
+
+//ATUALIZAÇÃO MENOS O ID
 
 app.put('/Jogos/idUpdate/:id', (req, res) => {
     const id = parseInt(req.params.id);
@@ -120,9 +136,11 @@ app.put('/Jogos/idUpdate/:id', (req, res) => {
     }
 });
 
+// DELETAR JOGO
+
 app.delete('/Jogos/idDelete/:id', (req, res) => { 
     const id = parseInt(req.params.id);
-    const IndexDel = Jogos.findIndex(p => p.id === id); 
+    const IndexDel = Jogos.findIndex(p => p.id === id); // PESQUISA O ID PELO ARRAY 
 
     if(IndexDel !== -1){
         const JogoDeletado = Jogos.splice(IndexDel, 1);
@@ -131,6 +149,8 @@ app.delete('/Jogos/idDelete/:id', (req, res) => {
         res.status(404).json( {error: 'Jogo não encontrado'})
     }
 })
+
+// PESQUISAR POR PREÇO
 
 app.get('/Jogos/precoSearch/:preco', (req, res) => {
     const precoM = parseInt(req.params.preco);
@@ -151,25 +171,28 @@ app.get('/Jogos/precoSearch/:preco', (req, res) => {
 
 });
 
+// ETC...
+
 app.get("/Jogos/quantia", (req,res) => res.json({Quantia : `Atualmente existem ${(Jogos.length)} Cadastrados` }));
 
 app.get("/Jogos/First", (req,res) => res.json({Quantia : `Primeiro jogo cadastrado foi : ${(Jogos[0].nome)}` }));
 
 app.get("/Jogos/Last", (req,res) => res.json({Quantia : `Ultimo jogo cadastrado foi : ${(Jogos[Jogos.length - 1].nome)}` }));
 
+// MEDIA DO PREÇO DOS JOGOS
+
 app.get('/Jogos/Med', (req, res) => {
-    
     let Sum = 0
-
     for(let i = 0; i < Jogos.length ;i++){
-        
         Sum += Jogos[i].preco
-
     }
 
     let Med = Sum/Jogos.length
     res.json({Media : `A média de preço de todos os jogos cadastrados atualmente é : ${(Med)}` })
 });
+
+
+// CRIA MAIS DE UM 
 
 app.post('/Jogos/idCreateMultiple', (req, res) => {
     const novosJogosArray = req.body; 
@@ -195,3 +218,4 @@ app.post('/Jogos/idCreateMultiple', (req, res) => {
     }
     res.status(201).json(jogosAdicionados);
 });
+
