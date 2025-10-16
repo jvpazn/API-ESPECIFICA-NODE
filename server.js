@@ -119,9 +119,10 @@ app.post('/Jogos/idCreate', (req, res) => {
 
 app.put('/Jogos/idUpdate/:id', (req, res) => {
     const id = parseInt(req.params.id);
-    const { nome } = req.body;
-    const { Tags } = req.body;
-    const { preco } = req.body;
+    const nome = req.body.nome;
+    const preco = req.body.preco;
+    const Tags = req.body.Tags;
+
 
     const Jogoupd = Jogos.find(p => p.id === id);
     if(Jogoupd) {
@@ -218,4 +219,5 @@ app.post('/Jogos/idCreateMultiple', (req, res) => {
     }
     res.status(201).json(jogosAdicionados);
 });
+
 
